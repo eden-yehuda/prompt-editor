@@ -12,7 +12,7 @@
   :root {
     --navy: #14355e;
     --navy-light: #1e4a7a;
-    --navy-bg: #f0f4f8;
+    --navy-bg: #edf2f7;
     --green: #afbc21;
     --green-dark: #95a11c;
     --green-bg: #f7f9e8;
@@ -20,23 +20,34 @@
     --cyan-light: #d4f0fb;
     --cyan-bg: #eaf8fd;
     --teal: #21729e;
-    --bg: #fafbfc;
+    --bg: #f4f6f9;
     --white: #ffffff;
     --gray-50: #f8f9fb;
     --gray-100: #f1f3f6;
-    --gray-200: #e4e8ed;
+    --gray-200: #e2e6ec;
     --gray-300: #cdd3dc;
     --gray-400: #9aa3b1;
     --gray-500: #6b7585;
     --gray-600: #4a5568;
     --gray-700: #2d3748;
+    --gray-800: #1a202c;
+    --term-bg: #1e1e2e;
+    --term-bg2: #282840;
+    --term-text: #cdd6f4;
+    --term-green: #a6e3a1;
+    --term-blue: #89b4fa;
+    --term-comment: #6c7086;
+    --term-string: #f9e2af;
+    --term-keyword: #cba6f7;
     --radius: 12px;
     --radius-sm: 8px;
     --radius-lg: 16px;
+    --radius-xl: 20px;
     --shadow-sm: 0 1px 3px rgba(20,53,94,0.06);
     --shadow: 0 2px 8px rgba(20,53,94,0.08);
     --shadow-md: 0 4px 16px rgba(20,53,94,0.1);
     --shadow-lg: 0 8px 32px rgba(20,53,94,0.12);
+    --shadow-focus: 0 0 0 3px rgba(43,173,221,0.2), 0 0 0 1px rgba(43,173,221,0.4);
     --transition: 0.2s ease;
   }
 
@@ -60,10 +71,19 @@
   .btn svg { flex-shrink:0; }
 
   /* ─── Page ─── */
-  .page { max-width:1100px; margin:0 auto; padding:28px 24px 100px; }
-  .page-intro { text-align:center; margin-bottom:32px; }
-  .page-intro h2 { font-size:26px; font-weight:800; color:var(--navy); margin-bottom:6px; }
-  .page-intro p { font-size:15px; color:var(--gray-500); }
+  .page { max-width:1140px; margin:0 auto; padding:28px 24px 120px; }
+
+  /* ─── Hero Intro ─── */
+  .hero { background:linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 50%, var(--teal) 100%); border-radius:var(--radius-xl); padding:36px 40px 32px; margin-bottom:28px; color:var(--white); position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; top:-40px; left:-40px; width:200px; height:200px; background:rgba(255,255,255,0.04); border-radius:50%; }
+  .hero::after { content:''; position:absolute; bottom:-60px; right:-30px; width:250px; height:250px; background:rgba(255,255,255,0.03); border-radius:50%; }
+  .hero-title { font-size:28px; font-weight:800; margin-bottom:8px; position:relative; z-index:1; }
+  .hero-subtitle { font-size:15px; opacity:0.85; margin-bottom:20px; max-width:600px; line-height:1.8; position:relative; z-index:1; }
+  .hero-steps { display:flex; gap:12px; flex-wrap:wrap; position:relative; z-index:1; }
+  .hero-step { display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.12); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.15); border-radius:var(--radius); padding:10px 16px; font-size:13px; font-weight:500; }
+  .hero-step-num { width:24px; height:24px; border-radius:50%; background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; }
+  .hero-step svg { width:16px; height:16px; flex-shrink:0; opacity:0.7; }
+  .hero-arrow { color:rgba(255,255,255,0.4); font-size:18px; display:flex; align-items:center; }
 
   /* ─── Section ─── */
   .section { background:var(--white); border:1px solid var(--gray-200); border-radius:var(--radius-lg); margin-bottom:20px; overflow:hidden; transition:box-shadow var(--transition); }
@@ -72,7 +92,7 @@
   .section-header:hover { background:var(--gray-50); }
   .section.open .section-header { border-bottom:1px solid var(--gray-200); }
   .section-header-right { display:flex; align-items:center; gap:12px; }
-  .section-num { width:30px; height:30px; border-radius:8px; background:var(--navy); color:var(--white); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; flex-shrink:0; }
+  .section-num { width:32px; height:32px; border-radius:10px; background:var(--navy); color:var(--white); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; flex-shrink:0; }
   .section-name { font-size:16px; font-weight:600; color:var(--navy); }
   .section-tag { font-size:11px; font-weight:600; padding:3px 10px; border-radius:20px; }
   .tag-tech { background:#fef2f2; color:#dc2626; }
@@ -82,58 +102,114 @@
   .tag-examples { background:#f3e8ff; color:#7c3aed; }
   .chevron-icon { width:20px; height:20px; color:var(--gray-400); transition:transform 0.3s; flex-shrink:0; }
   .section.open .chevron-icon { transform:rotate(180deg); }
-  .section-body { display:none; padding:24px; }
+  .section-body { display:none; }
   .section.open .section-body { display:block; }
 
-  /* ─── Field Row ─── */
-  .field-row { display:grid; grid-template-columns:1fr 240px; gap:20px; margin-bottom:24px; }
-  .field-row:last-child { margin-bottom:0; }
-  .field-row.full { grid-template-columns:1fr; }
-  @media (max-width:860px) { .field-row { grid-template-columns:1fr; } }
+  /* ─── Section body with soft bg tint ─── */
+  .section-body-inner { padding:28px; }
+  .s-tech .section-body { background:#fefbfb; }
+  .s-design .section-body { background:#f8fcfe; }
+  .s-content .section-body { background:#fafcf4; }
+  .s-summary .section-body { background:#fffcf5; }
+
+  /* ─── Field Card ─── */
+  .field-card { background:var(--white); border:1px solid var(--gray-200); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px; display:grid; grid-template-columns:1fr 260px; gap:22px; transition:border-color var(--transition), box-shadow var(--transition); }
+  .field-card:last-child { margin-bottom:0; }
+  .field-card:focus-within { border-color:var(--cyan); box-shadow:0 2px 12px rgba(43,173,221,0.08); }
+  .field-card.full { grid-template-columns:1fr; }
+  @media (max-width:900px) { .field-card { grid-template-columns:1fr; } }
 
   /* ─── Field Group ─── */
-  .field-group { display:flex; flex-direction:column; gap:6px; }
+  .field-group { display:flex; flex-direction:column; gap:8px; }
   .field-label { font-size:14px; font-weight:600; color:var(--gray-700); display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
   .field-label .req { color:#dc2626; font-size:12px; }
-  .field-label .badge { font-size:11px; font-weight:500; padding:2px 8px; border-radius:4px; background:var(--navy-bg); color:var(--navy); }
+  .field-label .badge { font-size:11px; font-weight:500; padding:2px 8px; border-radius:4px; }
   .field-label .badge-fill { background:#fff7ed; color:#c2410c; border:1px solid #fed7aa; }
-  .field-label .badge-lock { background:var(--gray-100); color:var(--gray-400); }
+  .field-label .badge-lock { background:var(--term-bg); color:var(--term-comment); border:1px solid #383852; }
   .field-hint { font-size:13px; color:var(--gray-400); }
 
-  textarea, input[type="text"], select { width:100%; padding:11px 14px; background:var(--white); border:1.5px solid var(--gray-200); border-radius:var(--radius-sm); color:var(--gray-700); font-family:'Heebo',sans-serif; font-size:14px; line-height:1.7; resize:vertical; transition:all var(--transition); outline:none; }
+  /* ─── Editable textarea ─── */
+  textarea, input[type="text"], select {
+    width:100%; padding:12px 16px; background:var(--white); border:1.5px solid var(--gray-200);
+    border-radius:var(--radius-sm); color:var(--gray-700); font-family:'Heebo',sans-serif;
+    font-size:14px; line-height:1.8; resize:vertical; transition:all var(--transition); outline:none;
+  }
   textarea:hover, input[type="text"]:hover, select:hover { border-color:var(--gray-300); }
-  textarea:focus, input[type="text"]:focus, select:focus { border-color:var(--cyan); box-shadow:0 0 0 3px rgba(43,173,221,0.12); }
-  textarea { min-height:90px; }
-  textarea.tall { min-height:150px; }
+  textarea:focus, input[type="text"]:focus, select:focus {
+    border-color:var(--cyan);
+    box-shadow:var(--shadow-focus);
+    background:#fcfdff;
+  }
+  textarea { min-height:120px; }
+  textarea.tall { min-height:180px; }
 
-  select { cursor:pointer; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236b7585' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:14px center; padding-left:32px; }
+  select { cursor:pointer; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236b7585' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:14px center; padding-left:32px; min-height:auto; }
 
-  /* ─── Locked (readonly) ─── */
-  .locked { background:var(--gray-50); color:var(--gray-500); cursor:default; resize:none; border-style:dashed; }
-  .locked:focus { border-color:var(--gray-200); box-shadow:none; }
+  /* ─── Terminal / Locked Fields ─── */
+  .terminal-block {
+    background:var(--term-bg); border:1px solid #383852; border-radius:var(--radius);
+    padding:0; overflow:hidden;
+  }
+  .terminal-bar {
+    background:var(--term-bg2); padding:8px 16px; display:flex; align-items:center; gap:8px;
+    border-bottom:1px solid #383852;
+  }
+  .terminal-dot { width:10px; height:10px; border-radius:50%; }
+  .terminal-dot.r { background:#f38ba8; }
+  .terminal-dot.y { background:var(--term-string); }
+  .terminal-dot.g { background:var(--term-green); }
+  .terminal-bar-title { font-size:11px; color:var(--term-comment); font-family:'Courier New',Consolas,monospace; margin-right:auto; direction:ltr; }
+  .terminal-body {
+    padding:16px 20px; font-family:'Courier New',Consolas,monospace; font-size:13px;
+    line-height:1.75; color:var(--term-text); direction:ltr; text-align:left;
+    white-space:pre-wrap; word-break:break-word; max-height:300px; overflow-y:auto;
+  }
+  .terminal-body::-webkit-scrollbar { width:6px; }
+  .terminal-body::-webkit-scrollbar-thumb { background:#383852; border-radius:3px; }
+  .terminal-body .t-comment { color:var(--term-comment); }
+  .terminal-body .t-keyword { color:var(--term-keyword); }
+  .terminal-body .t-func { color:var(--term-blue); }
+  .terminal-body .t-string { color:var(--term-string); }
+  .terminal-body .t-green { color:var(--term-green); }
 
-  /* ─── Code Block ─── */
-  .code-block { background:var(--gray-50); border:1px solid var(--gray-200); border-radius:var(--radius-sm); padding:14px 16px; font-family:'Courier New',Consolas,monospace; font-size:12.5px; line-height:1.65; direction:ltr; text-align:left; color:var(--gray-600); max-height:220px; overflow-y:auto; white-space:pre-wrap; word-break:break-all; }
-  .code-block::-webkit-scrollbar { width:5px; }
-  .code-block::-webkit-scrollbar-thumb { background:var(--gray-300); border-radius:3px; }
+  .locked-textarea {
+    background:var(--term-bg); color:var(--term-text); border:1px solid #383852;
+    font-family:'Courier New',Consolas,monospace; font-size:13px; line-height:1.75;
+    cursor:default; resize:none; direction:ltr; text-align:left;
+  }
+  .locked-textarea:hover, .locked-textarea:focus { border-color:#383852; box-shadow:none; background:var(--term-bg); }
 
-  /* ─── Tip Panel ─── */
-  .tip { background:var(--gray-50); border:1px solid var(--gray-200); border-radius:var(--radius); padding:14px; align-self:start; position:sticky; top:84px; }
-  .tip-head { font-size:11px; font-weight:700; color:var(--navy); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.4px; }
-  .tip p { font-size:13px; color:var(--gray-500); line-height:1.7; }
-  .tip-info { background:var(--cyan-bg); border-color:var(--cyan-light); }
-  .tip-info .tip-head { color:var(--teal); }
+  /* ─── Tip Bubble ─── */
+  .tip-bubble {
+    background:var(--white); border:1px solid var(--gray-200); border-radius:var(--radius);
+    padding:14px 16px; align-self:start; position:sticky; top:84px;
+    border-right:4px solid var(--cyan); box-shadow:var(--shadow-sm);
+  }
+  .tip-bubble-header { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .tip-bubble-icon {
+    width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .tip-bubble-icon svg { width:16px; height:16px; }
+  .tip-bubble-icon.ic-idea { background:#fef9ec; color:#b45309; }
+  .tip-bubble-icon.ic-idea svg { stroke:#b45309; fill:none; }
+  .tip-bubble-icon.ic-lock { background:var(--term-bg); }
+  .tip-bubble-icon.ic-lock svg { stroke:var(--term-green); fill:none; }
+  .tip-bubble-icon.ic-palette { background:#f3e8ff; }
+  .tip-bubble-icon.ic-palette svg { stroke:#7c3aed; fill:none; }
+  .tip-bubble-icon.ic-target { background:var(--green-bg); }
+  .tip-bubble-icon.ic-target svg { stroke:var(--green-dark); fill:none; }
+  .tip-bubble-icon.ic-chart { background:#fef2f2; }
+  .tip-bubble-icon.ic-chart svg { stroke:#dc2626; fill:none; }
+  .tip-bubble-title { font-size:12px; font-weight:700; color:var(--navy); text-transform:uppercase; letter-spacing:0.3px; }
+  .tip-bubble p { font-size:13px; color:var(--gray-500); line-height:1.7; }
+  .tip-bubble-lock { border-right-color:var(--term-green); background:#f8f8fc; }
 
   /* ─── Icon Editor ─── */
   .icon-editor { display:flex; flex-direction:column; gap:6px; margin-top:4px; }
   .icon-row { display:grid; grid-template-columns:1fr 100px; gap:8px; align-items:center; }
-  .icon-row input { font-size:13px; padding:8px 10px; direction:ltr; text-align:left; }
-  .icon-row .icon-name { font-size:13px; color:var(--gray-600); font-weight:500; text-align:left; direction:ltr; }
+  .icon-row input { font-size:13px; padding:8px 10px; direction:ltr; text-align:left; min-height:auto; }
   .icon-preview { width:28px; height:28px; border-radius:50%; object-fit:cover; vertical-align:middle; margin-left:6px; }
   .icon-label-cell { display:flex; align-items:center; gap:6px; }
-
-  /* ─── Divider ─── */
-  .sep { height:1px; background:var(--gray-200); margin:20px 0; }
 
   /* ─── Feedback desc ─── */
   .fb-desc { margin-top:8px; padding:12px 14px; background:var(--cyan-bg); border:1px solid var(--cyan-light); border-radius:var(--radius-sm); font-size:13px; color:var(--teal); line-height:1.8; display:none; }
@@ -141,7 +217,7 @@
 
   /* ─── Examples Gallery ─── */
   .examples-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:16px; }
-  .example-card { border:1.5px solid var(--gray-200); border-radius:var(--radius); padding:18px; transition:all var(--transition); cursor:pointer; position:relative; }
+  .example-card { border:1.5px solid var(--gray-200); border-radius:var(--radius); padding:18px; transition:all var(--transition); cursor:pointer; position:relative; background:var(--white); }
   .example-card:hover { border-color:var(--cyan); box-shadow:var(--shadow); }
   .example-card-tag { position:absolute; top:12px; left:12px; font-size:10px; font-weight:600; padding:2px 8px; border-radius:10px; background:var(--navy-bg); color:var(--navy); }
   .example-card h4 { font-size:15px; font-weight:600; color:var(--navy); margin-bottom:6px; }
@@ -151,15 +227,44 @@
   .example-empty svg { width:48px; height:48px; stroke:var(--gray-300); margin-bottom:12px; }
   .example-empty p { font-size:14px; }
 
+  /* ─── Bottom CTA Bar ─── */
+  .bottom-cta {
+    position:fixed; bottom:0; left:0; right:0; z-index:99;
+    background:var(--white); border-top:1px solid var(--gray-200);
+    box-shadow:0 -4px 20px rgba(20,53,94,0.08);
+    padding:14px 32px; display:flex; align-items:center; justify-content:center; gap:16px;
+  }
+  .bottom-cta-text { font-size:13px; color:var(--gray-500); display:flex; align-items:center; gap:6px; }
+  .bottom-cta-text svg { width:18px; height:18px; stroke:var(--green); flex-shrink:0; }
+  .bottom-cta .btn-copy-big {
+    padding:12px 32px; font-size:15px; font-weight:700; border-radius:var(--radius);
+    background:linear-gradient(135deg, var(--navy), var(--teal)); border:none; color:var(--white);
+    cursor:pointer; font-family:'Heebo',sans-serif; display:inline-flex; align-items:center; gap:8px;
+    transition:all var(--transition); box-shadow:0 2px 12px rgba(20,53,94,0.2);
+  }
+  .bottom-cta .btn-copy-big:hover { box-shadow:0 4px 20px rgba(20,53,94,0.35); transform:translateY(-1px); }
+  .bottom-cta .btn-copy-big svg { width:18px; height:18px; }
+
   /* ─── Toast ─── */
-  .toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(10px); background:var(--navy); color:var(--white); padding:10px 28px; border-radius:var(--radius-sm); font-size:14px; z-index:9999; opacity:0; transition:all 0.3s; pointer-events:none; box-shadow:var(--shadow-md); }
+  .toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(10px); background:var(--navy); color:var(--white); padding:12px 32px; border-radius:var(--radius); font-size:14px; font-weight:500; z-index:9999; opacity:0; transition:all 0.3s; pointer-events:none; box-shadow:var(--shadow-lg); }
   .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 
   ::-webkit-scrollbar { width:6px; }
   ::-webkit-scrollbar-track { background:transparent; }
   ::-webkit-scrollbar-thumb { background:var(--gray-300); border-radius:3px; }
 
-  @media print { .topbar,.toast{display:none!important} .section-body{display:block!important} .page{padding:0} }
+  @media print { .topbar,.bottom-cta,.toast{display:none!important} .section-body{display:block!important} .page{padding:0} }
+  @media (max-width:700px) {
+    .hero { padding:24px 20px; }
+    .hero-title { font-size:22px; }
+    .hero-steps { flex-direction:column; }
+    .hero-arrow { display:none; }
+    .bottom-cta { flex-direction:column; gap:8px; padding:12px 16px; }
+    .topbar { padding:0 16px; }
+    .topbar-actions { gap:4px; }
+    .section-body-inner { padding:16px; }
+    .field-card { padding:14px; }
+  }
 </style>
 </head>
 <body>
@@ -174,26 +279,44 @@
   <div class="topbar-actions">
     <a class="btn btn-green" href="https://gemini.google.com/gem/1J6PwVSwDC3vCkuxvBC_qlOZpRI9Fxtfr?usp=sharing" target="_blank" rel="noopener">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      בוט Gemini עוזר
+      בוט Gemini
     </a>
     <button class="btn" onclick="resetAll()">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
       איפוס
     </button>
-    <button class="btn btn-primary" onclick="copyPrompt()">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      העתק פרומפט מלא
-    </button>
   </div>
 </header>
 
 <main class="page">
-  <div class="page-intro">
-    <h2>הגדרת פרומפט למשחק לימודי</h2>
-    <p>ערוך את החלקים הניתנים לעריכה, קרא את ההמלצות בצד, ולחץ "העתק פרומפט מלא" כשסיימת</p>
+
+  <!-- ═══ Hero Intro ═══ -->
+  <div class="hero">
+    <h1 class="hero-title">מחולל פרומפט לרכיב משחק AI</h1>
+    <p class="hero-subtitle">
+      הכלי הזה מרכיב עבורך "פרומפט-על" (Master Prompt) אחד ושלם.
+      מלא את השדות הניתנים לעריכה, החלקים הנעולים נכללים אוטומטית — ובסוף לחץ <strong>"העתק פרומפט מלא"</strong> כדי לקבל את הפרומפט המורכב המוכן להדבקה ב-AI.
+    </p>
+    <div class="hero-steps">
+      <div class="hero-step">
+        <div class="hero-step-num">1</div>
+        ערוך את השדות הפתוחים
+      </div>
+      <div class="hero-arrow">&larr;</div>
+      <div class="hero-step">
+        <div class="hero-step-num">2</div>
+        החלקים הנעולים נכנסים אוטומטית
+      </div>
+      <div class="hero-arrow">&larr;</div>
+      <div class="hero-step">
+        <div class="hero-step-num">3</div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        העתק והדבק ב-AI
+      </div>
+    </div>
   </div>
 
-  <!-- ══════ דוגמאות ══════ -->
+  <!-- ═══ דוגמאות ═══ -->
   <div class="section" id="s-examples">
     <div class="section-header" onclick="toggle('s-examples')">
       <div class="section-header-right">
@@ -206,14 +329,14 @@
       <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="section-body">
-      <div class="examples-grid" id="examples-grid">
-        <!-- JS populates cards or empty state -->
+      <div class="section-body-inner">
+        <div class="examples-grid" id="examples-grid"></div>
       </div>
     </div>
   </div>
 
-  <!-- ══════ 1. הגדרות טכניות ══════ -->
-  <div class="section open" id="s1">
+  <!-- ═══ 1. הגדרות טכניות ═══ -->
+  <div class="section s-tech open" id="s1">
     <div class="section-header" onclick="toggle('s1')">
       <div class="section-header-right">
         <div class="section-num">1</div>
@@ -223,82 +346,98 @@
       <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="section-body">
+      <div class="section-body-inner">
 
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">תפקיד המודל</label>
-          <textarea id="f-role">You are a "Game Engine" whose role is to transform educational content received from teachers or developers into a full game experience for students (ages 12–18). Your task is not only to present questions, but to wrap them in game mechanics (Game Loop) that include a framing story, tension, rewards, and active learning from mistakes.
+        <!-- Role -->
+        <div class="field-card">
+          <div class="field-group">
+            <label class="field-label">תפקיד המודל</label>
+            <textarea id="f-role">You are a "Game Engine" whose role is to transform educational content received from teachers or developers into a full game experience for students (ages 12–18). Your task is not only to present questions, but to wrap them in game mechanics (Game Loop) that include a framing story, tension, rewards, and active learning from mistakes.
 
 Generate all user-facing text (labels, instructions, feedback, buttons) in the same language as the user's request. If the user writes in Hebrew, output Hebrew; if in English, output English; etc.</textarea>
+          </div>
+          <div class="tip-bubble">
+            <div class="tip-bubble-header">
+              <div class="tip-bubble-icon ic-idea"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/><path d="M9 21h6"/></svg></div>
+              <span class="tip-bubble-title">שיקולים</span>
+            </div>
+            <p>אפשר להוסיף "פרסונה" ל-AI (מורה, מדריך הרפתקאות, מדען) כדי לחזק את הסיפור העוטף של המשחק.</p>
+          </div>
         </div>
-        <div class="tip">
-          <div class="tip-head">שיקולים</div>
-          <p>אפשר להוסיף "פרסונה" ל-AI (מורה, מדריך הרפתקאות, מדען) כדי לחזק את הסיפור העוטף.</p>
+
+        <!-- Output format -->
+        <div class="field-card">
+          <div class="field-group">
+            <label class="field-label">פורמט פלט</label>
+            <textarea id="f-output" style="min-height:90px;">Generate a single, complete, self-contained HTML file. No external dependencies. All CSS and JavaScript must be inline. The HTML will be embedded in an iframe.</textarea>
+          </div>
+          <div class="tip-bubble">
+            <div class="tip-bubble-header">
+              <div class="tip-bubble-icon ic-idea"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/><path d="M9 21h6"/></svg></div>
+              <span class="tip-bubble-title">שיקולים</span>
+            </div>
+            <p>אם צריך תמונות חיצוניות, ציין שרק קישורי Google Drive מותרים (לא CDN חיצוני).</p>
+          </div>
         </div>
-      </div>
 
-      <div class="sep"></div>
+        <!-- postMessage — LOCKED TERMINAL -->
+        <div class="field-card">
+          <div class="field-group">
+            <label class="field-label">postMessage API <span class="badge badge-lock">SYSTEM — נעול</span></label>
+            <div class="terminal-block">
+              <div class="terminal-bar">
+                <span class="terminal-dot r"></span>
+                <span class="terminal-dot y"></span>
+                <span class="terminal-dot g"></span>
+                <span class="terminal-bar-title">postMessage protocol — read only</span>
+              </div>
+              <div class="terminal-body"><span class="t-comment">// Communication protocol between game iframe and parent system</span>
+<span class="t-comment">// This section is included automatically in the final prompt.</span>
 
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">פורמט פלט</label>
-          <textarea id="f-output">Generate a single, complete, self-contained HTML file. No external dependencies. All CSS and JavaScript must be inline. The HTML will be embedded in an iframe.</textarea>
-        </div>
-        <div class="tip">
-          <div class="tip-head">שיקולים</div>
-          <p>אם צריך תמונות חיצוניות, ציין שרק קישורי Google Drive מותרים (לא CDN חיצוני).</p>
-        </div>
-      </div>
+The HTML runs inside an iframe and must communicate with the parent via postMessage.
 
-      <div class="sep"></div>
+<span class="t-green">- DO</span> send `answer` with the complete answer object <span class="t-keyword">ONLY</span> when the game ends.
+<span class="t-green">- DO</span> send `answer` with an empty object `{}` when the user resets the game.
+<span class="t-comment">- DO NOT</span> send `update` or `answer` during gameplay, on page load, or on `init`.
+- The answer object must include: score, streak, completion status, and detailed results.
 
-      <!-- postMessage — LOCKED -->
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">postMessage API <span class="badge badge-lock">נעול — לא לערוך</span></label>
-          <textarea class="locked" readonly>The HTML runs inside an iframe and must communicate with the parent via postMessage.
+<span class="t-comment">// ─── Code Example ───</span>
+<span class="t-keyword">window</span>.parent.<span class="t-func">postMessage</span>({ type: <span class="t-string">'ready'</span>, message: <span class="t-string">'Loaded'</span> }, <span class="t-string">'*'</span>);
 
-- DO send `answer` with the complete answer object ONLY when the game ends (all challenges completed).
-- DO send `answer` with an empty object `{}` when the user clears or resets the game.
-- DO NOT send `update` or `answer` during gameplay, on page load, or when restoring state from `init`.
-- The answer object must include all game data: total score, streak, completion status, and detailed results for each question.</textarea>
-          <p class="field-hint" style="margin-top:8px;">דוגמת קוד:</p>
-          <div class="code-block">// Send when loaded
-window.parent.postMessage({ type: 'ready', message: 'Loaded' }, '*');
-
-// Send ONLY when game ends
-function endGame() {
-  const answerObject = {
+<span class="t-keyword">function</span> <span class="t-func">endGame</span>() {
+  <span class="t-keyword">const</span> answerObject = {
     score: totalScore, streak: currentStreak,
-    completed: true, results: allQuestionsResults
+    completed: <span class="t-keyword">true</span>, results: allQuestionsResults
   };
-  window.parent.postMessage({ type: 'answer', value: answerObject }, '*');
+  <span class="t-keyword">window</span>.parent.<span class="t-func">postMessage</span>({ type: <span class="t-string">'answer'</span>, value: answerObject }, <span class="t-string">'*'</span>);
 }
 
-// Reset
-function resetGame() {
-  window.parent.postMessage({ type: 'answer', value: {} }, '*');
+<span class="t-keyword">function</span> <span class="t-func">resetGame</span>() {
+  <span class="t-keyword">window</span>.parent.<span class="t-func">postMessage</span>({ type: <span class="t-string">'answer'</span>, value: {} }, <span class="t-string">'*'</span>);
 }
 
-// Listen for init (restore state — no postMessage)
-window.addEventListener('message', (event) => {
-  if (event.data?.type === 'init') {
-    const data = event.data.value;
-    // Restore UI state only
+<span class="t-keyword">window</span>.<span class="t-func">addEventListener</span>(<span class="t-string">'message'</span>, (event) =&gt; {
+  <span class="t-keyword">if</span> (event.data?.type === <span class="t-string">'init'</span>) {
+    <span class="t-comment">// Restore UI state only — no postMessage here</span>
   }
 });</div>
+            </div>
+          </div>
+          <div class="tip-bubble tip-bubble-lock">
+            <div class="tip-bubble-header">
+              <div class="tip-bubble-icon ic-lock"><svg viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+              <span class="tip-bubble-title">חלק מערכתי</span>
+            </div>
+            <p>קוד זה אחראי על <strong>שליחת הציונים והתוצאות</strong> מהמשחק למערכת. הוא נכלל אוטומטית בפרומפט הסופי — <strong>אין צורך ואין אפשרות לערוך אותו</strong>.</p>
+          </div>
         </div>
-        <div class="tip tip-info">
-          <div class="tip-head">מה זה עושה?</div>
-          <p>חלק זה אחראי על <strong>שליחת הציונים והתוצאות</strong> מהמשחק חזרה למערכת. הוא שולח את הנתונים רק בסיום המשחק. <strong>אין לשנות חלק זה</strong> — הוא חיוני לתפקוד התקין של דיווח הציונים.</p>
-        </div>
-      </div>
 
+      </div>
     </div>
   </div>
 
-  <!-- ══════ 2. עיצוב כללי + עיצוב דיסציפלינרי ══════ -->
-  <div class="section open" id="s2">
+  <!-- ═══ 2. עיצוב כללי + עיצוב דיסציפלינרי ═══ -->
+  <div class="section s-design open" id="s2">
     <div class="section-header" onclick="toggle('s2')">
       <div class="section-header-right">
         <div class="section-num">2</div>
@@ -308,107 +447,112 @@ window.addEventListener('message', (event) => {
       <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="section-body">
+      <div class="section-body-inner">
 
-      <!-- Color palette -->
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">פלטת צבעים <span class="badge badge-fill">ניתן לשינוי</span></label>
-          <textarea id="f-colors">Primary: #14355e (כחול כהה — כותרות ורקעים כהים)
+        <!-- Colors -->
+        <div class="field-card">
+          <div class="field-group">
+            <label class="field-label">פלטת צבעים <span class="badge badge-fill">ניתן לשינוי</span></label>
+            <textarea id="f-colors">Primary: #14355e (כחול כהה — כותרות ורקעים כהים)
 Secondary: #2baddd (תכלת — כפתורים ואלמנטים אינטראקטיביים)
 Accent: #afbc21 (ירוק — הצלחות, ניקוד, הדגשות)
 Background: #f8f9fa (אפור בהיר מאוד — רקע כללי)
 Text: #2d3748 (אפור כהה — טקסט רגיל)</textarea>
+          </div>
+          <div class="tip-bubble">
+            <div class="tip-bubble-header">
+              <div class="tip-bubble-icon ic-palette"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12" r="2.5"/><path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10c.55 0 1-.45 1-1v-1.5c0-.28.22-.5.5-.5h1c2.76 0 5-2.24 5-5 0-5.52-4.48-9.5-10-9.5z"/></svg></div>
+              <span class="tip-bubble-title">שיקולים</span>
+            </div>
+            <p>אפשר להחליף לצבעים שמתאימים לנושא הדיסציפלינרי — גוונים חמים למדעי הרוח, כחולים למדעים.</p>
+          </div>
         </div>
-        <div class="tip">
-          <div class="tip-head">שיקולים</div>
-          <p>אפשר להחליף לצבעים שמתאימים לנושא הדיסציפלינרי — למשל גוונים חמים למדעי הרוח, כחולים למדעים.</p>
-        </div>
-      </div>
 
-      <div class="sep"></div>
-
-      <!-- Style -->
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">סגנון עיצובי <span class="badge badge-fill">ניתן לשינוי</span></label>
-          <textarea id="f-style">סגנון מודרני ונקי, פינות מעוגלות (border-radius: 12px), צללים עדינים.
+        <!-- Style -->
+        <div class="field-card">
+          <div class="field-group">
+            <label class="field-label">סגנון עיצובי <span class="badge badge-fill">ניתן לשינוי</span></label>
+            <textarea id="f-style">סגנון מודרני ונקי, פינות מעוגלות (border-radius: 12px), צללים עדינים.
 אנימציות מעבר חלקות (transitions) בין מסכים ובמשוב לתשובות.
 כרטיסים (cards) בולטים על רקע בהיר, טיפוגרפיה ברורה וקריאה.</textarea>
+          </div>
+          <div class="tip-bubble">
+            <div class="tip-bubble-header">
+              <div class="tip-bubble-icon ic-palette"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12" r="2.5"/><path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10c.55 0 1-.45 1-1v-1.5c0-.28.22-.5.5-.5h1c2.76 0 5-2.24 5-5 0-5.52-4.48-9.5-10-9.5z"/></svg></div>
+              <span class="tip-bubble-title">שיקולים</span>
+            </div>
+            <p>אפשר להתאים לגיל — סגנון שטוח ומינימלי לתיכוניסטים, אנימטיבי וצבעוני יותר לחטיבת ביניים.</p>
+          </div>
         </div>
-        <div class="tip">
-          <div class="tip-head">שיקולים</div>
-          <p>אפשר להתאים לגיל היעד — סגנון שטוח ומינימלי לתיכוניסטים, אנימטיבי וצבעוני יותר לחטיבת ביניים.</p>
-        </div>
-      </div>
 
-      <div class="sep"></div>
-
-      <!-- Design instructions -->
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">הנחיות עיצוב נוספות</label>
-          <textarea id="f-design-notes">השתמש בצבעים מערכת הצבעים המתוארת, שישתלבו באופן מיטבי במשחק. אין צורך להשתמש בכל הצבעים, ניתן להשתמש בשלושה או בארבעה צבעים מתאימים מאותו גוון.
+        <!-- Design notes -->
+        <div class="field-card">
+          <div class="field-group">
+            <label class="field-label">הנחיות עיצוב נוספות</label>
+            <textarea id="f-design-notes">השתמש בצבעים מערכת הצבעים המתוארת, שישתלבו באופן מיטבי במשחק. אין צורך להשתמש בכל הצבעים, ניתן להשתמש בשלושה או בארבעה צבעים מתאימים מאותו גוון.
 לרקע השתמש בגוון בהיר ולכותרות בצבע כהה יותר. השתמש בפונט Simpler.
 גובה אוטומטי של המשחק 700px.
 את הלוגו (מזהה: 19ZhKbYoXfZMBmr-PU4r3sueFPOeTNgD_) הצג בפינה הימנית העליונה בגובה של כ-12 units, ללא רקע.</textarea>
-        </div>
-        <div class="tip">
-          <div class="tip-head">שיקולים</div>
-          <p>אם הגובה 700px לא מספיק, שנה ל-auto. אפשר להחליף פונט — Heebo ו-Assistant עובדים היטב בעברית.</p>
-        </div>
-      </div>
-
-      <div class="sep"></div>
-
-      <!-- Header bar -->
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">סרגל עליון (Header)</label>
-          <textarea id="f-header">בחלק העליון של כל מסך, הצג:
-שם המשחק | נושא | ציון: [מספר] | רצף: [מספר] | התקדמות: [▓▓▓░░░░ 30%]</textarea>
-        </div>
-        <div class="tip">
-          <div class="tip-head">שיקולים</div>
-          <p>אפשר להוסיף טיימר אם הפעילות מוגבלת בזמן, או להסיר "רצף" אם אין מנגנון streak.</p>
-        </div>
-      </div>
-
-      <div class="sep"></div>
-
-      <!-- Icon editor -->
-      <div class="field-row full">
-        <div class="field-group">
-          <label class="field-label">אייקונים — קישורי תמונות</label>
-          <p class="field-hint">ניתן לערוך את הקישורים או להחליף לתמונות אחרות. הפורמט: https://drive.google.com/thumbnail?id=FILE_ID&sz=w1000</p>
-          <div class="icon-editor" id="icon-editor">
-            <!-- populated by JS -->
+          </div>
+          <div class="tip-bubble">
+            <div class="tip-bubble-header">
+              <div class="tip-bubble-icon ic-idea"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/><path d="M9 21h6"/></svg></div>
+              <span class="tip-bubble-title">שיקולים</span>
+            </div>
+            <p>אם 700px לא מספיק, שנה ל-auto. Heebo ו-Assistant עובדים היטב בעברית כחלופה לפונט.</p>
           </div>
         </div>
-      </div>
 
-      <div class="sep"></div>
+        <!-- Header bar -->
+        <div class="field-card">
+          <div class="field-group">
+            <label class="field-label">סרגל עליון (Header)</label>
+            <textarea id="f-header" style="min-height:90px;">בחלק העליון של כל מסך, הצג:
+שם המשחק | נושא | ציון: [מספר] | רצף: [מספר] | התקדמות: [▓▓▓░░░░ 30%]</textarea>
+          </div>
+          <div class="tip-bubble">
+            <div class="tip-bubble-header">
+              <div class="tip-bubble-icon ic-idea"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/><path d="M9 21h6"/></svg></div>
+              <span class="tip-bubble-title">שיקולים</span>
+            </div>
+            <p>אפשר להוסיף טיימר אם הפעילות מוגבלת בזמן, או להסיר "רצף" אם אין מנגנון streak.</p>
+          </div>
+        </div>
 
-      <!-- Icon embed instructions -->
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">הוראות הטמעת אייקונים</label>
-          <textarea id="f-icon-instructions">הוראות טכניות להטמעת האייקונים:
+        <!-- Icons -->
+        <div class="field-card full">
+          <div class="field-group">
+            <label class="field-label">אייקונים — קישורי תמונות</label>
+            <p class="field-hint">ניתן לערוך את הקישורים או להחליף לתמונות אחרות. הפורמט: https://drive.google.com/thumbnail?id=FILE_ID&sz=w1000</p>
+            <div class="icon-editor" id="icon-editor"></div>
+          </div>
+        </div>
+
+        <!-- Icon instructions -->
+        <div class="field-card">
+          <div class="field-group">
+            <label class="field-label">הוראות הטמעת אייקונים</label>
+            <textarea id="f-icon-instructions">הוראות טכניות להטמעת האייקונים:
 1. לכל קישור גוגל דרייב, חלץ את ה-ID והשתמש בפורמט: https://drive.google.com/thumbnail?id={FILE_ID}&sz=w1000
 2. צור רכיב StyledCircularIcon שמציג את התמונה בתוך עיגול עם צבע רקע מפלטת הצבעים.
 3. הוסף מנגנון Fallback: אם התמונה לא נטענת, הצג אייקון לבן מ-lucide-react על רקע צבעוני.
 4. את הלוגו הצג בפינה הימנית העליונה בגובה כ-12 units, ללא רקע.</textarea>
+          </div>
+          <div class="tip-bubble">
+            <div class="tip-bubble-header">
+              <div class="tip-bubble-icon ic-idea"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/><path d="M9 21h6"/></svg></div>
+              <span class="tip-bubble-title">שיקולים</span>
+            </div>
+            <p>אפשר לוותר על אייקונים מותאמים ולהסתפק באייקוני lucide/emoji — זה מפשט את הפרומפט.</p>
+          </div>
         </div>
-        <div class="tip">
-          <div class="tip-head">שיקולים</div>
-          <p>אפשר לוותר על אייקונים מותאמים ולהסתפק באייקוני lucide/emoji בלבד — זה מפשט את הפרומפט.</p>
-        </div>
-      </div>
 
+      </div>
     </div>
   </div>
 
-  <!-- ══════ 3. סוג הפעילות והתוכן ══════ -->
-  <div class="section open" id="s3">
+  <!-- ═══ 3. סוג הפעילות והתוכן ═══ -->
+  <div class="section s-content open" id="s3">
     <div class="section-header" onclick="toggle('s3')">
       <div class="section-header-right">
         <div class="section-num">3</div>
@@ -418,29 +562,31 @@ Text: #2d3748 (אפור כהה — טקסט רגיל)</textarea>
       <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="section-body">
+      <div class="section-body-inner">
 
-      <!-- Activity type -->
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">סוג ומבנה הפעילות <span class="badge badge-fill">ניתן לשינוי</span></label>
-          <textarea id="f-activity">חידון טריוויה אינטראקטיבי — 10 שאלות רב-ברירה.
+        <!-- Activity -->
+        <div class="field-card">
+          <div class="field-group">
+            <label class="field-label">סוג ומבנה הפעילות <span class="badge badge-fill">ניתן לשינוי</span></label>
+            <textarea id="f-activity">חידון טריוויה אינטראקטיבי — 10 שאלות רב-ברירה.
 כל שאלה מציגה 4 תשובות אפשריות. תשובה נכונה = ניקוד + אנימציית הצלחה.
 תשובה שגויה = הסבר קצר + אפשרות לנסות שוב (עד 2 ניסיונות).
 בין השאלות מופיעה עובדה מעניינת או רמז קצר שקשור לנושא.</textarea>
+          </div>
+          <div class="tip-bubble">
+            <div class="tip-bubble-header">
+              <div class="tip-bubble-icon ic-target"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+              <span class="tip-bubble-title">שיקולים</span>
+            </div>
+            <p>אפשר להחליף ל: חדר בריחה, משחק זיכרון, הרפתקת טקסט, או שילוב סוגי שאלות (פתוחות + סגורות).</p>
+          </div>
         </div>
-        <div class="tip">
-          <div class="tip-head">שיקולים</div>
-          <p>אפשר להחליף ל: חדר בריחה, משחק זיכרון, הרפתקת טקסט, או שילוב סוגי שאלות (פתוחות + סגורות).</p>
-        </div>
-      </div>
 
-      <div class="sep"></div>
-
-      <!-- Content -->
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">חומרי התוכן <span class="badge badge-fill">ניתן לשינוי</span></label>
-          <textarea id="f-content" class="tall">שאלה 1: [נושא השאלה]
+        <!-- Content -->
+        <div class="field-card">
+          <div class="field-group">
+            <label class="field-label">חומרי התוכן <span class="badge badge-fill">ניתן לשינוי</span></label>
+            <textarea id="f-content" class="tall">שאלה 1: [נושא השאלה]
 תשובה נכונה: [התשובה]
 מסיחים: [תשובה שגויה א'], [תשובה שגויה ב'], [תשובה שגויה ג']
 הסבר: [הסבר קצר למה התשובה הנכונה נכונה]
@@ -451,36 +597,41 @@ Text: #2d3748 (אפור כהה — טקסט רגיל)</textarea>
 הסבר: [הסבר קצר]
 
 (העתק מבנה זה עבור כל שאלה — מומלץ 8-15 שאלות)</textarea>
+          </div>
+          <div class="tip-bubble">
+            <div class="tip-bubble-header">
+              <div class="tip-bubble-icon ic-target"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+              <span class="tip-bubble-title">שיקולים</span>
+            </div>
+            <p>מומלץ 8-15 פריטים. אפשר להדביק תוכן גולמי — ה-AI יחלק לשאלות אם תציין "צור שאלות מהתוכן הבא".</p>
+          </div>
         </div>
-        <div class="tip">
-          <div class="tip-head">שיקולים</div>
-          <p>מומלץ לכלול 8-15 פריטים. אפשר להדביק תוכן גולמי — ה-AI ידע לחלק אותו לשאלות אם תציין "צור שאלות מהתוכן הבא".</p>
+
+        <!-- Feedback -->
+        <div class="field-card">
+          <div class="field-group">
+            <label class="field-label">מנגנון משוב והערכה</label>
+            <select id="f-feedback">
+              <option value="mastery" selected>הערכה מבוססת שליטה (לתרגול או מבדק)</option>
+              <option value="effort">הערכה מבוססת התקדמות ומאמץ (להקניה ועידוד)</option>
+            </select>
+            <div class="fb-desc visible" id="fb-desc">הניקוד מצטבר אך ורק עם ההגעה לתשובה הנכונה. תלמיד שטועה יקבל הכוונה ורמז, ויוכל לנסות שוב עד להצלחה ללא איבוד ניקוד בסיסי.</div>
+          </div>
+          <div class="tip-bubble">
+            <div class="tip-bubble-header">
+              <div class="tip-bubble-icon ic-target"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+              <span class="tip-bubble-title">שיקולים</span>
+            </div>
+            <p>"שליטה" מתאים למבדקים. "מאמץ" מתאים כשרוצים לעודד חקירה ללא חשש מטעויות.</p>
+          </div>
         </div>
+
       </div>
-
-      <div class="sep"></div>
-
-      <!-- Feedback mechanism -->
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">מנגנון משוב והערכה</label>
-          <select id="f-feedback">
-            <option value="mastery" selected>הערכה מבוססת שליטה (לתרגול או מבדק)</option>
-            <option value="effort">הערכה מבוססת התקדמות ומאמץ (להקניה ועידוד)</option>
-          </select>
-          <div class="fb-desc visible" id="fb-desc">הניקוד מצטבר אך ורק עם ההגעה לתשובה הנכונה. תלמיד שטועה יקבל הכוונה ורמז, ויוכל לנסות שוב עד להצלחה ללא איבוד ניקוד בסיסי.</div>
-        </div>
-        <div class="tip">
-          <div class="tip-head">שיקולים</div>
-          <p>"שליטה" מתאים למבדקים. "מאמץ" מתאים כשרוצים לעודד חקירה ללא חשש מטעויות.</p>
-        </div>
-      </div>
-
     </div>
   </div>
 
-  <!-- ══════ 4. מסך סיכום הנתונים ══════ -->
-  <div class="section open" id="s4">
+  <!-- ═══ 4. מסך סיכום הנתונים ═══ -->
+  <div class="section s-summary open" id="s4">
     <div class="section-header" onclick="toggle('s4')">
       <div class="section-header-right">
         <div class="section-num">4</div>
@@ -490,56 +641,75 @@ Text: #2d3748 (אפור כהה — טקסט רגיל)</textarea>
       <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="section-body">
+      <div class="section-body-inner">
 
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">הנחיות מסך סיכום</label>
-          <textarea id="f-summary-intro">בסיום הפעילות, עצור את האינטראקציה הרגילה והפק מסך סיכום מקיף ומפורט. עליך להציג את הנתונים כך שיוכלו לשמש את התלמיד לרפלקציה ואת המורה להערכה.</textarea>
+        <div class="field-card">
+          <div class="field-group">
+            <label class="field-label">הנחיות מסך סיכום</label>
+            <textarea id="f-summary-intro">בסיום הפעילות, עצור את האינטראקציה הרגילה והפק מסך סיכום מקיף ומפורט. עליך להציג את הנתונים כך שיוכלו לשמש את התלמיד לרפלקציה ואת המורה להערכה.</textarea>
+          </div>
+          <div class="tip-bubble">
+            <div class="tip-bubble-header">
+              <div class="tip-bubble-icon ic-chart"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div>
+              <span class="tip-bubble-title">שיקולים</span>
+            </div>
+            <p>אפשר לבקש "המלצה ללמידה המשכית" — נושא שהתלמיד התקשה בו.</p>
+          </div>
         </div>
-        <div class="tip">
-          <div class="tip-head">שיקולים</div>
-          <p>אפשר לבקש שהסיכום יכלול גם "המלצה ללמידה המשכית" — קישור לנושא שהתלמיד התקשה בו.</p>
+
+        <div class="field-card">
+          <div class="field-group">
+            <label class="field-label">תמונת מצב פדגוגית</label>
+            <select id="f-pedagogy">
+              <option value="score">ציון סופי ואחוז דיוק כולל (%)</option>
+              <option value="summary">סיכום מילולי: נושאים שהובנו + פערי ידע</option>
+              <option value="both" selected>שניהם — ציון + סיכום מילולי (מומלץ)</option>
+            </select>
+          </div>
+          <div class="tip-bubble">
+            <div class="tip-bubble-header">
+              <div class="tip-bubble-icon ic-chart"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div>
+              <span class="tip-bubble-title">שיקולים</span>
+            </div>
+            <p>"שניהם" נותן תמונה מלאה. ציון בלבד מתאים למבחנים, סיכום מילולי להערכה מעצבת.</p>
+          </div>
         </div>
-      </div>
 
-      <div class="sep"></div>
-
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">תמונת מצב פדגוגית</label>
-          <select id="f-pedagogy">
-            <option value="score">ציון סופי ואחוז דיוק כולל (%)</option>
-            <option value="summary">סיכום מילולי: נושאים שהובנו + פערי ידע</option>
-            <option value="both" selected>שניהם — ציון + סיכום מילולי (מומלץ)</option>
-          </select>
-        </div>
-        <div class="tip">
-          <div class="tip-head">שיקולים</div>
-          <p>"שניהם" נותן תמונה מלאה. ציון בלבד מתאים למבחנים, סיכום מילולי מתאים להערכה מעצבת.</p>
-        </div>
-      </div>
-
-      <div class="sep"></div>
-
-      <div class="field-row">
-        <div class="field-group">
-          <label class="field-label">מדדי השקעה <span class="req">*</span></label>
-          <textarea id="f-metrics">מדדים שחובה להציג בסיום:
+        <div class="field-card">
+          <div class="field-group">
+            <label class="field-label">מדדי השקעה <span class="req">*</span></label>
+            <textarea id="f-metrics">מדדים שחובה להציג בסיום:
 
 • זמן כולל — משך הזמן שהושקע במשימה מתחילתה ועד סופה.
 • שימוש בתמיכה — מספר הרמזים או בקשות העזרה שהתלמיד הפעיל.
 • התמדה (ניסיונות חוזרים) — סך הזדמנויות שניות שניצל התלמיד לאחר שגיאה עד להגעה לתשובה הנכונה.</textarea>
+          </div>
+          <div class="tip-bubble">
+            <div class="tip-bubble-header">
+              <div class="tip-bubble-icon ic-chart"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div>
+              <span class="tip-bubble-title">שיקולים</span>
+            </div>
+            <p>אפשר להוסיף: אחוז שימוש ברמזים, זמן ממוצע לשאלה, או "השאלה שלקחה הכי הרבה זמן".</p>
+          </div>
         </div>
-        <div class="tip">
-          <div class="tip-head">שיקולים</div>
-          <p>אפשר להוסיף מדדים: אחוז שימוש ברמזים, זמן ממוצע לשאלה, או "שאלה שלקחה הכי הרבה זמן".</p>
-        </div>
-      </div>
 
+      </div>
     </div>
   </div>
 
 </main>
+
+<!-- Bottom CTA Bar -->
+<div class="bottom-cta">
+  <span class="bottom-cta-text">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    כל השדות (הפתוחים + הנעולים) מורכבים לפרומפט אחד שלם
+  </span>
+  <button class="btn-copy-big" onclick="copyPrompt()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+    העתק פרומפט מלא
+  </button>
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -590,11 +760,8 @@ function updateIconPreview(i) {
 
 buildIconEditor();
 
-// ═══ Examples gallery (empty shell — populate with data later) ═══
-const EXAMPLES = [
-  // { title: 'חידון מדעים', desc: 'חידון טריוויה על מערכת השמש', type: 'טריוויה', questions: 12, prompt: '...' },
-  // { title: 'חדר בריחה היסטורי', desc: 'פתרון חידות על תקופת בית שני', type: 'חדר בריחה', questions: 8, prompt: '...' },
-];
+// ═══ Examples gallery ═══
+const EXAMPLES = [];
 
 function buildExamples() {
   const grid = document.getElementById('examples-grid');
@@ -612,9 +779,7 @@ function buildExamples() {
       <span class="example-card-tag">${ex.type}</span>
       <h4>${ex.title}</h4>
       <p>${ex.desc}</p>
-      <div class="example-meta">
-        <span>${ex.questions} שאלות</span>
-      </div>
+      <div class="example-meta"><span>${ex.questions} שאלות</span></div>
     </div>
   `).join('');
 }
@@ -623,7 +788,6 @@ function loadExample(i) {
   const ex = EXAMPLES[i];
   if (!ex || !ex.prompt) return;
   if (!confirm(`לטעון את הדוגמה "${ex.title}"? השדות הנוכחיים יוחלפו.`)) return;
-  // Future: populate fields from ex.prompt object
   showToast(`הדוגמה "${ex.title}" נטענה`);
 }
 
@@ -683,68 +847,38 @@ function copyPrompt() {
 
   const prompt = [
     v('f-role'),
-    '',
-    '---',
-    '',
+    '', '---', '',
     '## Output format and technical requirements',
-    '',
-    '1. **Output:** ' + v('f-output'),
-    '',
-    '2. **postMessage API (CRITICAL):**',
-    postmsg,
-    '',
-    '3. **Language:** All user-facing text must be in the same language as the user\'s request.',
-    '',
-    '---',
-    '',
+    '', '1. **Output:** ' + v('f-output'),
+    '', '2. **postMessage API (CRITICAL):**', postmsg,
+    '', '3. **Language:** All user-facing text must be in the same language as the user\'s request.',
+    '', '---', '',
     '## עיצוב כללי + עיצוב דיסציפלינרי',
-    '',
-    'פלטת צבעים:',
-    v('f-colors'),
-    '',
-    'סגנון עיצובי:',
-    v('f-style'),
-    '',
-    v('f-design-notes'),
-    '',
-    v('f-header'),
-    '',
-    'אייקונים:',
-    getIconsText(),
-    '',
-    v('f-icon-instructions'),
-    '',
-    '---',
-    '',
+    '', 'פלטת צבעים:', v('f-colors'),
+    '', 'סגנון עיצובי:', v('f-style'),
+    '', v('f-design-notes'),
+    '', v('f-header'),
+    '', 'אייקונים:', getIconsText(),
+    '', v('f-icon-instructions'),
+    '', '---', '',
     '## סוג הפעילות והתוכן',
-    '',
-    'סוג ומבנה הפעילות:',
-    v('f-activity'),
-    '',
-    'חומרי התוכן:',
-    v('f-content'),
-    '',
-    'מנגנון משוב והערכה: ' + sel('f-feedback'),
+    '', 'סוג ומבנה הפעילות:', v('f-activity'),
+    '', 'חומרי התוכן:', v('f-content'),
+    '', 'מנגנון משוב והערכה: ' + sel('f-feedback'),
     FB[document.getElementById('f-feedback').value] || '',
-    '',
-    '---',
-    '',
+    '', '---', '',
     '## מסך סיכום הנתונים',
-    '',
-    v('f-summary-intro'),
-    '',
-    'תמונת מצב פדגוגית: ' + sel('f-pedagogy'),
-    '',
-    v('f-metrics'),
+    '', v('f-summary-intro'),
+    '', 'תמונת מצב פדגוגית: ' + sel('f-pedagogy'),
+    '', v('f-metrics'),
   ].join('\n');
 
-  navigator.clipboard.writeText(prompt).then(() => showToast('הפרומפט הועתק בהצלחה!'));
+  navigator.clipboard.writeText(prompt).then(() => showToast('הפרומפט הועתק ללוח — הדבק אותו ב-AI!'));
 }
 
-// Store defaults for reset
 const DEFAULTS = {};
-document.querySelectorAll('textarea:not(.locked)').forEach(ta => {
-  DEFAULTS[ta.id] = ta.value;
+document.querySelectorAll('textarea:not(.locked-textarea)').forEach(ta => {
+  if (ta.id) DEFAULTS[ta.id] = ta.value;
 });
 DEFAULTS['f-feedback'] = 'mastery';
 DEFAULTS['f-pedagogy'] = 'both';
@@ -761,7 +895,7 @@ function resetAll() {
   showToast('השדות אופסו לברירת מחדל');
 }
 
-document.querySelectorAll('textarea:not(.locked)').forEach(ta => {
+document.querySelectorAll('textarea:not(.locked-textarea)').forEach(ta => {
   ta.addEventListener('input', function() {
     this.style.height = 'auto';
     this.style.height = this.scrollHeight + 'px';
